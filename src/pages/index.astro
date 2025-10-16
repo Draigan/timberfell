@@ -1,105 +1,106 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-
-import Hero from '~/components/widgets/Hero.astro';
+import Button from '~/components/ui/Button.astro';
 import Note from '~/components/widgets/Note.astro';
 import Features from '~/components/widgets/Features.astro';
 import Features2 from '~/components/widgets/Features2.astro';
+import Features4d from '~/components/widgets/Features4d.astro';
 import Steps from '~/components/widgets/Steps.astro';
 import Content from '~/components/widgets/Content.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import heroBackground from '~/assets/images/test1.jpg';
 
 const metadata = {
   title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
   ignoreTitleTemplate: true,
 };
+
+const heroActions = [
+  {
+    variant: 'primary',
+    text: 'Book a consultation',
+    href: '#contact',
+  },
+  { text: 'Explore services', href: '#features' },
+];
 ---
 
 <Layout metadata={metadata}>
   <!-- Hero Widget ******************* -->
 
-  <Hero
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Get template',
-        href: 'https://github.com/arthelokyo/astrowind',
-        target: '_blank',
-        icon: 'tabler:download',
-      },
-      { text: 'Learn more', href: '#features' },
-    ]}
-    image={{ src: '~/assets/images/hero-image.png', alt: 'AstroWind Hero Image' }}
-  >
-    <Fragment slot="title">
-      Free template for <span class="hidden xl:inline">creating websites with</span>
-      <span class="text-accent dark:text-white"> Astro 5.0</span> + Tailwind CSS
-    </Fragment>
-
-    <Fragment slot="subtitle">
-      <span class="hidden sm:inline">
-        <span class="font-semibold">AstroWind</span> is a free, customizable and production-ready template for Astro 5.0
-        + Tailwind CSS.</span
-      >
-      <span class="block mb-1 sm:hidden font-bold text-blue-600">AstroWind: Production-ready.</span>
-      Suitable for Startups, Small Business, SaaS websites, Professional Portfolios, Marketing websites, Landing Pages &
-      Blogs.
-    </Fragment>
-  </Hero>
+  <section class="relative overflow-hidden not-prose">
+    <div class="absolute inset-0">
+      <div
+        class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={`background-image: url(${heroBackground.src});`}
+      ></div>
+      <div class="absolute inset-0 bg-brand-forest/40 mix-blend-multiply dark:bg-brand-midnight/55"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-brand-spruceSoft/15 via-brand-forest/45 to-brand-midnight/60 dark:from-transparent dark:via-brand-spruce/45 dark:to-black/50"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="py-20 sm:py-28 lg:py-36 text-white">
+        <div class="max-w-4xl space-y-6">
+          <p class="text-sm font-semibold tracking-[0.35em] uppercase text-accent/80">Timberfell Tree Care</p>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
+            Expert arborists protecting the canopy that shelters your property
+          </h1>
+          <p class="text-lg sm:text-xl text-white/85">
+            From precision pruning to 24/7 emergency removals, Timberfell keeps your trees healthy, safe, and beautiful
+            with ISA-certified crews and industry-leading equipment.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            {
+              heroActions.map((action) => (
+                <Button
+                  {...action}
+                  class="w-full sm:w-auto"
+                />
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Note Widget ******************* -->
 
-  <Note title="Philosophy:" description="Simplicity, Best Practices and High Performance" />
+  <!--<Note title="Philosophy:" description="Simplicity, Best Practices and High Performance" />-->
 
   <!-- Features Widget *************** -->
+  <Features4d
+  columns={4}
+  id="features"
+  tagline=""
+  title="Known. Trusted. Timberfell."
+  subtitle=""
+  items={[
+    {
+      title: 'Fully Insured',
+      description: '',
+      icon: 'tabler:shield-check', // conveys protection & insurance
+    },
+    {
+      title: 'Expert Efficiency',
+      description: '',
+      icon: 'tabler:tool', // represents skill, workmanship, precision
+    },
+    {
+      title: "Serving the Kawarthas for Over 15 Years",
+      description: '',
+      icon: 'tabler:calendar-star', // symbolizes experience & time
+    },
+    {
+      title: '24 hr. Emergency Aerial Lift Service',
+      description: '',
+      icon: 'tabler:alert-triangle', // good match for emergency response
+    },
+  ]}
+/>
 
-  <Features
-    id="features"
-    tagline="Features"
-    title="What you get with AstroWind"
-    subtitle="One of the most professional and comprehensive templates currently on the market. Most starred & forked Astro theme in 2022, 2023 and 2024."
-    items={[
-      {
-        title: 'Astro + Tailwind CSS Integration',
-        description:
-          'A seamless integration between two great frameworks that offer high productivity, performance and versatility.',
-        icon: 'tabler:brand-tailwind',
-      },
-      {
-        title: 'Ready-to-use Components',
-        description:
-          'Widgets made with Tailwind CSS ready to be used in Marketing Websites, SaaS, Blogs, Personal Profiles, Small Business...',
-        icon: 'tabler:components',
-      },
-      {
-        title: 'Best Practices',
-        description:
-          'Creating secure, efficient, and user-friendly websites that deliver exceptional experiences and lasting value.',
-        icon: 'tabler:list-check',
-      },
-      {
-        title: 'Excellent Page Speed',
-        description:
-          'Having a good page speed impacts organic search ranking, improves user experience (UI/UX) and increase conversion rates.',
-        icon: 'tabler:rocket',
-      },
-      {
-        title: 'Search Engine Optimization (SEO)',
-        description:
-          "SEO lies in its ability to enhance a website's visibility, driving organic traffic and enabling it to reach a wider audience.",
-        icon: 'tabler:arrows-right-left',
-      },
-      {
-        title: 'Open to new ideas and contributions',
-        description:
-          'Embracing a culture that is open to new ideas and contributions is integral fostering innovation, collaboration, and a dynamic user experience.',
-        icon: 'tabler:bulb',
-      },
-    ]}
-  />
 
   <!-- Content Widget **************** -->
 
