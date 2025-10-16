@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { twMerge } from 'tailwind-merge';
 import Button from '~/components/ui/Button.astro';
 import heroBackgroundDefault from '~/assets/images/test1.jpg';
 
@@ -67,22 +68,35 @@ const mobileDetailsProps = !defaultCollapsed && collapsible ? { open: true } : {
       <div class="grid gap-10 lg:gap-16 items-center text-white md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
         <div class="space-y-6">
           {hasEyebrow && (
-            <p class="text-sm font-semibold tracking-[0.35em] uppercase text-accent/85">{displayEyebrow}</p>
+            <p class="text-sm font-semibold tracking-[0.35em] uppercase text-accent/85 intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+              {displayEyebrow}
+            </p>
           )}
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">{heading}</h1>
-          {description && <p class="text-lg sm:text-xl text-white/90 max-w-2xl">{description}</p>}
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+            {heading}
+          </h1>
+          {description && (
+            <p class="text-lg sm:text-xl text-white/90 max-w-2xl intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+              {description}
+            </p>
+          )}
           {hasActions && (
-            <div class="flex flex-col sm:flex-row gap-4">
-              {actionItems.map((action) => (
+            <div class="flex flex-col sm:flex-row gap-4 intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+              {actionItems.map((action, index) => (
                 <Button
                   {...action}
-                  class="w-full sm:w-auto"
+                  class={twMerge(
+                    'w-full sm:w-auto',
+                    index === 0
+                      ? ''
+                      : 'border-white/70 text-white hover:bg-white/15 hover:border-white/70 hover:text-white'
+                  )}
                 />
               ))}
             </div>
           )}
         </div>
-        <div class="w-full">
+        <div class="w-full intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
           <div class="md:hidden">
             {mobileCollapsible ? (
               <details class={`group ${formClasses}`} {...mobileDetailsProps}>

@@ -4,6 +4,7 @@ import Hero3 from '~/components/widgets/Hero3.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Features4d from '~/components/widgets/Features4d.astro';
 import Content from '~/components/widgets/Content.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import heroBackground from '~/assets/images/hero1.png';
 
@@ -36,137 +37,210 @@ const heroActions = [
   />
 
   <!-- Credentials / Trust Bar -->
-  <Features4d
-    id="credentials"
-    columns={4}
-    tagline="Credentials"
-    classes={{ container: 'py-12 sm:py-16' }}
-    title="Trusted. Certified. Prepared."
-    subtitle="Everything we do is backed by insurance, training, and over 15 years of local experience."
-    items={[
-      {
-        title: 'Fully Insured',
-        description:
-          'WSIB-covered and fully insured for residential and commercial tree work — your property and our crew are always protected.',
-        icon: 'tabler:shield-check',
-      },
-      {
-        title: 'Expert Efficiency',
-        description:
-          'Modern equipment and certified arborists let us complete even complex jobs safely and on schedule, without cutting corners.',
-        icon: 'tabler:tool',
-      },
-      {
-        title: 'Serving the Kawarthas for Over 15 Years',
-        description:
-          'Proudly helping homeowners and businesses across Lindsay, Peterborough, and the Kawartha Lakes region since 2009.',
-        icon: 'tabler:calendar-star',
-      },
-      {
-        title: '24 hr. Emergency Aerial Lift Service',
-        description:
-          'Storm damage, fallen limbs, or dangerous trees — our aerial lift crews are on call day or night when urgent help is needed.',
-        icon: 'tabler:alert-triangle',
-      },
-    ]}
-  />
-
-  <!-- Philosophy / The Timberfell Way -->
-  <Content
-    isReversed
-    tagline="Our Approach"
-    title="The Timberfell Way"
-    items={[
-      {
-        title: 'Safety-First Process',
-        description:
-          'From initial inspection to final cleanup, every step is guided by strict safety standards and arboricultural best practices.',
-      },
-      {
-        title: 'Precision & Care',
-        description:
-          'We use the right tools and climbing techniques to protect both your trees and your property.',
-      },
-      {
-        title: 'Respect for Every Yard',
-        description:
-          'Your property is treated like our own—minimal disturbance, thorough cleanup, and attention to detail.',
-      },
-    ]}
-    image={{
-      src: 'https://plus.unsplash.com/premium_photo-1663134018102-2b27cd4a3f83?ixlib=rb-4.1.0&auto=format&fit=crop&w=600&q=60',
-      alt: 'Arborist at work in Kawartha Lakes',
-    }}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-3xl mb-2">
-        Safety. Precision. Respect.
-      </h3>
+<Features4d
+  id="credentials"
+  columns={4}
+  tagline="Credentials"
+  classes={{
+    container: 'py-12 sm:py-16 bg-stone-50', // light neutral backdrop
+    items: { icon: 'text-accent' }, // brown icons
+  }}
+  title="Trusted. Certified. Prepared."
+  subtitle="Everything we do is backed by insurance, training, and over 15 years of local experience."
+  items={[
+    {
+      title: 'Fully Insured',
+      description:
+        'WSIB-covered and fully insured for residential and commercial tree work — your property and our crew are always protected.',
+      icon: 'tabler:shield-check',
+    },
+    {
+      title: 'Expert Efficiency',
+      description:
+        'Modern equipment and certified arborists let us complete even complex jobs safely and on schedule, without cutting corners.',
+      icon: 'tabler:tool',
+    },
+    {
+      title: 'Serving the Kawarthas for Over 15 Years',
+      description:
+        'Proudly helping homeowners and businesses across Lindsay, Peterborough, and the Kawartha Lakes region since 2009.',
+      icon: 'tabler:calendar-star',
+    },
+    {
+      title: '24 hr. Emergency Aerial Lift Service',
+      description:
+        'Storm damage, fallen limbs, or dangerous trees — our aerial lift crews are on call day or night when urgent help is needed.',
+      icon: 'tabler:alert-triangle',
+    },
+  ]}
+/>
+<!-- Philosophy / The Timberfell Way -->
+<Content
+  isReversed
+  tagline=""
+  title="The Timberfell Way"
+  classes={{
+    container: 'py-20 sm:py-24 bg-stone-50', // soft neutral to contrast other green sections
+    items: { title: 'text-accent' }, // warm brown headings for each point
+  }}
+  items={[
+    {
+      title: 'Safety-First Process',
+      description:
+        'From initial inspection to final cleanup, every step is guided by strict safety standards and arboricultural best practices.',
+    },
+    {
+      title: 'Precision & Care',
+      description:
+        'We use the right tools and climbing techniques to protect both your trees and your property.',
+    },
+    {
+      title: 'Respect for Every Yard',
+      description:
+        'Your property is treated like our own—minimal disturbance, thorough cleanup, and attention to detail.',
+    },
+  ]}
+  image={{
+    src: 'https://plus.unsplash.com/premium_photo-1663134018102-2b27cd4a3f83?ixlib=rb-4.1.0&auto=format&fit=crop&w=600&q=60',
+    alt: 'Arborist at work in Kawartha Lakes',
+  }}
+>
+  <Fragment slot="content">
+    <p class="text-accent font-semibold uppercase tracking-wide mb-3">Our Approach</p>
+    <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 mb-4">
+      Safety. <span class="text-accent">Precision.</span> Respect.
+    </h3>
+    <p class="text-gray-700 leading-relaxed">
       Every Timberfell project begins with a plan and ends with a spotless yard.  
       We take pride in leaving your property safer and cleaner than we found it.
-    </Fragment>
+    </p>
+    <div class="h-1 w-16 bg-accent rounded-full mt-6"></div>
+  </Fragment>
 
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-green-50/60 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
+  <Fragment slot="bg">
+    <!-- faint warm gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-brand-cedar/10 via-green-50/60 to-transparent"></div>
+  </Fragment>
+</Content>
+
 
   <!-- Services -->
-  <Features2
-    id="services"
-    tagline="Tree Services"
-    columns={4}
-    title="Complete Care for Every Tree"
-    subtitle="From seasonal pruning to emergency removals, Timberfell handles every aspect of tree care with the right tools and expertise."
-    items={[
-      {
-        title: 'Tree Removal',
-        description:
-          'Safe removal of hazardous or unwanted trees using proper rigging and equipment — with full cleanup after every job.',
-        icon: 'tabler:axe',
-      },
-      {
-        title: 'Pruning & Trimming',
-        description:
-          'Seasonal pruning and shaping to keep trees healthy, balanced, and looking their best year-round.',
-        icon: 'tabler:scissors',
-      },
-      {
-        title: 'Stump Grinding',
-        description:
-          'Quick, thorough stump removal to clear space for replanting, landscaping, or a smooth new lawn.',
-        icon: 'tabler:circle-dotted',
-      },
-      {
-        title: 'Emergency Tree Work',
-        description:
-          '24-hour response for storm damage, fallen trees, or unsafe limbs — with aerial lift service ready when needed.',
-        icon: 'tabler:alert-triangle',
-      },
-    ]}
-  >
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-green-50/60 dark:bg-transparent"></div>
-    </Fragment>
-  </Features2>
+<Features2
+  id="services"
+  tagline="Tree Services"
+  columns={4}
+  classes={{
+    container: 'py-16 sm:py-20 bg-white',
+    items: { icon: 'text-primary', title: 'text-accent' }, // green icons, brown titles
+  }}
+  title="Complete Care for Every Tree"
+  subtitle="From seasonal pruning to emergency removals, Timberfell handles every aspect of tree care with the right tools and expertise."
+  items={[
+    {
+      title: 'Tree Removal',
+      description:
+        'Safe removal of hazardous or unwanted trees using proper rigging and equipment — with full cleanup after every job.',
+      icon: 'tabler:axe',
+    },
+    {
+      title: 'Pruning & Trimming',
+      description:
+        'Seasonal pruning and shaping to keep trees healthy, balanced, and looking their best year-round.',
+      icon: 'tabler:scissors',
+    },
+    {
+      title: 'Stump Grinding',
+      description:
+        'Quick, thorough stump removal to clear space for replanting, landscaping, or a smooth new lawn.',
+      icon: 'tabler:circle-dotted',
+    },
+    {
+      title: 'Emergency Tree Work',
+      description:
+        '24-hour response for storm damage, fallen trees, or unsafe limbs — with aerial lift service ready when needed.',
+      icon: 'tabler:alert-triangle',
+    },
+  ]}
+>
+  <Fragment slot="bg">
+    <!-- Keep a soft green tint for freshness -->
+    <div class="absolute inset-0 bg-green-50/60 dark:bg-transparent"></div>
+    <!-- Optional thin cedar divider -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 h-1 w-16 bg-accent rounded-full"></div>
+  </Fragment>
+</Features2>
+  <!-- Testimonials Widget *********** -->
 
-  <!-- CTA -->
-  <CallToAction
-    actions={[
+  <Testimonials
+    title="Words from real customers"
+    testimonials={[
       {
-        variant: 'primary',
-        text: 'Request a Free Estimate',
-        href: '#contact',
-        icon: 'tabler:phone-call',
+        testimonial: `The designs are not only visually appealing but also highly professional. The templates have saved me a significant amount of time while helping me make a lasting impression on my clients.`,
+        name: 'Emily Kennedy',
+        job: 'Front-end developer',
+        image: {
+          src: 'https://images.unsplash.com/photo-1618835962148-cf177563c6c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=930&q=80',
+          alt: 'Emily Kennedy Image',
+        },
+      },
+      {
+        testimonial: `It beautifully showcases my work, with its clean and elegant design that lets my photographs shine. Customization was a breeze, even for a non-tech person like me. The result is a professional and immersive portfolio that's garnered numerous compliments.`,
+        name: 'Sarah Hansen',
+        job: 'Photographer',
+        image: {
+          src: 'https://images.unsplash.com/photo-1561406636-b80293969660?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80',
+          alt: 'Sarah Hansen Image',
+        },
+      },
+      {
+        testimonial: `I discovered these templates and I'm impressed by their variety and quality. They've helped me establish a consistent brand image across my marketing and social platforms, elevating my business's overall appearance.`,
+        name: 'Mark Wilkinson',
+        job: 'Small business owner',
+        image: {
+          src: 'https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=824&q=80',
+          alt: 'Mark Wilkinson Image',
+        },
       },
     ]}
-  >
-    <Fragment slot="title">Ready to Schedule Your Tree Work?</Fragment>
-    <Fragment slot="subtitle">
-      Get in touch today for a no-obligation estimate.  
+    callToAction={{
+      target: '_blank',
+      text: 'More testimonials...',
+      href: 'https://github.com/arthelokyo/astrowind',
+      icon: 'tabler:chevron-right',
+    }}
+  />
+
+<!-- CTA -->
+<CallToAction
+  classes={{
+    container:
+      'bg-stone-50 text-gray-900 py-20 sm:py-24 text-center rounded-none',
+  }}
+  actions={[
+    {
+      variant: 'primary',
+      text: 'Request a Free Estimate',
+      href: '#contact',
+      icon: 'tabler:phone-call',
+      class: 'bg-brand-cedar hover:bg-brand-cedar/90 text-white border-none',
+    },
+  ]}
+>
+  <Fragment slot="title">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-3">
+      Ready to <span class="text-brand-cedar">Schedule Your Tree Work?</span>
+    </h2>
+  </Fragment>
+
+  <Fragment slot="subtitle">
+    <p class="text-gray-700 max-w-2xl mx-auto">
+      Get in touch today for a no-obligation estimate.<br />
       We respond within one business day to all service requests.
-    </Fragment>
-  </CallToAction>
+    </p>
+    <div class="h-1 w-16 bg-brand-cedar rounded-full mx-auto mt-8"></div>
+  </Fragment>
+</CallToAction>
+
 </Layout>
 
 <!------->
