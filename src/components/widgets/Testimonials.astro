@@ -3,6 +3,7 @@ import Headline from '~/components/ui/Headline.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Button from '~/components/ui/Button.astro';
 import Image from '~/components/common/Image.astro';
+import { Icon } from 'astro-icon/components';
 import type { Testimonials as Props } from '~/types';
 
 const {
@@ -25,10 +26,23 @@ const {
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {
       testimonials &&
-        testimonials.map(({ title, testimonial, name, job, image }) => (
+        testimonials.map(({ title, testimonial, name, job, image, rating = 0 }) => {
+          const normalizedRating = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
+          return (
           <div class="flex h-auto intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter">
             <div class="flex flex-col p-4 md:p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600">
               {title && <h2 class="text-lg font-medium leading-6 pb-4">{title}</h2>}
+              {normalizedRating > 0 && (
+                <div class="flex items-center gap-1 pb-3 text-accent">
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <Icon
+                      key={index}
+                      name={index < normalizedRating ? 'tabler:star-filled' : 'tabler:star'}
+                      class={`h-4 w-4 ${index < normalizedRating ? 'text-accent' : 'text-accent/30'}`}
+                    />
+                  ))}
+                </div>
+              )}
               {testimonial && (
                 <blockquote class="flex-auto">
                   <p class="text-muted">" {testimonial} "</p>
@@ -62,7 +76,8 @@ const {
               </div>
             </div>
           </div>
-        ))
+        );
+      })
     }
   </div>
   {

@@ -169,46 +169,63 @@ const heroActions = [
     <div class="absolute top-0 left-1/2 -translate-x-1/2 h-1 w-16 bg-accent rounded-full"></div>
   </Fragment>
 </Features2>
-  <!-- Testimonials Widget *********** -->
+<!-- Testimonials Widget *********** -->
+<Testimonials
+  title="What Our Customers Are Saying"
+  testimonials={[
+    {
+      testimonial: `We had two large maples hanging over our roof, and Timberfell removed them safely without a single mark on the lawn. The crew was professional, fast, and clearly knew what they were doing.`,
+      name: 'Laura P.',
+      job: 'Homeowner — Lindsay, ON',
+      rating: 5,
+      image: {
+        src: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=80',
+        alt: 'Homeowner in Lindsay, Ontario',
+      },
+    },
+    {
+      testimonial: `They pruned our mature trees beautifully — everything looks balanced and healthy again. The cleanup was spotless, and the price was fair. Highly recommend their team.`,
+      name: 'Samantha R.',
+      job: 'Property Owner — Peterborough, ON',
+      rating: 5,
+      image: {
+        src: 'https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?auto=format&fit=crop&w=400&q=80',
+        alt: 'Client from Peterborough',
+      },
+    },
+    {
+      testimonial: `They helped us remove an old birch that was dangerously close to our hydro line. Super professional and respectful of our garden. I’ll definitely call them again next season.`,
+      name: 'Anita L.',
+      job: 'Homeowner — Bobcaygeon, ON',
+      rating: 5,
+      image: {
+        src: 'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=400&q=80',
+        alt: 'Homeowner from Bobcaygeon',
+      },
+    },
+  ]}
+  callToAction={{
+    target: '_blank',
+    text: 'See more Google reviews',
+    href: 'https://www.google.com/search?q=Timberfell+Tree+Care+Kawartha+Lakes+reviews',
+    icon: 'tabler:chevron-right',
+    class: 'text-brand-cedar hover:text-brand-cedar/80 font-semibold',
+  }}
+>
+  <Fragment slot="bg">
+    <div class="absolute inset-0 bg-gradient-to-b from-white via-stone-50 to-stone-100"></div>
+  </Fragment>
 
-  <Testimonials
-    title="Words from real customers"
-    testimonials={[
-      {
-        testimonial: `The designs are not only visually appealing but also highly professional. The templates have saved me a significant amount of time while helping me make a lasting impression on my clients.`,
-        name: 'Emily Kennedy',
-        job: 'Front-end developer',
-        image: {
-          src: 'https://images.unsplash.com/photo-1618835962148-cf177563c6c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=930&q=80',
-          alt: 'Emily Kennedy Image',
-        },
-      },
-      {
-        testimonial: `It beautifully showcases my work, with its clean and elegant design that lets my photographs shine. Customization was a breeze, even for a non-tech person like me. The result is a professional and immersive portfolio that's garnered numerous compliments.`,
-        name: 'Sarah Hansen',
-        job: 'Photographer',
-        image: {
-          src: 'https://images.unsplash.com/photo-1561406636-b80293969660?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80',
-          alt: 'Sarah Hansen Image',
-        },
-      },
-      {
-        testimonial: `I discovered these templates and I'm impressed by their variety and quality. They've helped me establish a consistent brand image across my marketing and social platforms, elevating my business's overall appearance.`,
-        name: 'Mark Wilkinson',
-        job: 'Small business owner',
-        image: {
-          src: 'https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=824&q=80',
-          alt: 'Mark Wilkinson Image',
-        },
-      },
-    ]}
-    callToAction={{
-      target: '_blank',
-      text: 'More testimonials...',
-      href: 'https://github.com/arthelokyo/astrowind',
-      icon: 'tabler:chevron-right',
-    }}
-  />
+  <Fragment slot="title">
+    <h2 class="text-3xl sm:text-4xl font-bold text-center mb-3">
+      <span class="text-brand-cedar">Real Reviews,</span> Real Homeowners
+    </h2>
+    <p class="text-gray-700 text-center max-w-2xl mx-auto">
+      Trusted across Kawartha Lakes and Peterborough for safe, reliable, and fully insured tree care.
+    </p>
+    <div class="h-1 w-16 bg-brand-cedar rounded-full mx-auto mt-6"></div>
+  </Fragment>
+</Testimonials>
 
 <!-- CTA -->
 <CallToAction

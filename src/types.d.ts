@@ -159,6 +159,7 @@ export interface Testimonial {
   name?: string;
   job?: string;
   image?: string | unknown;
+  rating?: number;
 }
 
 export interface Input {
