@@ -12,7 +12,7 @@ import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
-import heroBackground from '~/assets/images/test1.jpg';
+import heroBackground from '~/assets/images/hero1.png';
 
 const metadata = {
   title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
@@ -33,7 +33,7 @@ const heroActions = [
   <!-- Hero Widget ******************* -->
 
   <Hero3
-    tagline="Timberfell Tree Care"
+    tagline="TIMBERFELL TREE REMOVAL"
     image={heroBackground}
     actions={heroActions}
   />
@@ -48,31 +48,35 @@ const heroActions = [
   columns={4}
   id="features"
   tagline=""
-  title="Known. Trusted. Timberfell."
+  title=""
   subtitle=""
-  items={[
-    {
-      title: 'Fully Insured',
-      description: '',
-      icon: 'tabler:shield-check', // conveys protection & insurance
-    },
-    {
-      title: 'Expert Efficiency',
-      description: '',
-      icon: 'tabler:tool', // represents skill, workmanship, precision
-    },
-    {
-      title: "Serving the Kawarthas for Over 15 Years",
-      description: '',
-      icon: 'tabler:calendar-star', // symbolizes experience & time
-    },
-    {
-      title: '24 hr. Emergency Aerial Lift Service',
-      description: '',
-      icon: 'tabler:alert-triangle', // good match for emergency response
-    },
-  ]}
-/>
+items={[
+  {
+    title: 'Fully Insured',
+    description:
+      'WSIB-covered and fully insured for residential and commercial tree work — your property and our crew are always protected.',
+    icon: 'tabler:shield-check',
+  },
+  {
+    title: 'Expert Efficiency',
+    description:
+      'Modern equipment and certified arborists let us complete even complex jobs safely and on schedule, without cutting corners.',
+    icon: 'tabler:tool',
+  },
+  {
+    title: 'Serving the Kawarthas for Over 15 Years',
+    description:
+      'Proudly helping homeowners and businesses across Lindsay, Peterborough, and the Kawartha Lakes region since 2009.',
+    icon: 'tabler:calendar-star',
+  },
+  {
+    title: '24 hr. Emergency Aerial Lift Service',
+    description:
+      'Storm damage, fallen limbs, or dangerous trees — our aerial lift crews are on call day or night when urgent help is needed.',
+    icon: 'tabler:alert-triangle',
+  },
+]}
+  />
 
 
   <!-- Content Widget **************** -->
@@ -373,4 +377,36 @@ const heroActions = [
       waste more time! :P
     </Fragment>
   </CallToAction>
+
+  <!-- Features Widget *************** -->
+  <Features4d
+  columns={4}
+  id="features"
+  tagline=""
+  title="Known. Trusted. Timberfell."
+  subtitle=""
+  items={[
+    {
+      title: 'Fully Insured',
+      description: '',
+      icon: 'tabler:shield-check', // conveys protection & insurance
+    },
+    {
+      title: 'Expert Efficiency',
+      description: '',
+      icon: 'tabler:tool', // represents skill, workmanship, precision
+    },
+    {
+      title: "Serving the Kawarthas for Over 15 Years",
+      description: '',
+      icon: 'tabler:calendar-star', // symbolizes experience & time
+    },
+    {
+      title: '24 hr. Emergency Aerial Lift Service',
+      description: '',
+      icon: 'tabler:alert-triangle', // good match for emergency response
+    },
+  ]}
+/>
+
 </Layout>
