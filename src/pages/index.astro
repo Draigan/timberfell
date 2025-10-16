@@ -1,5 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import ChatWidget from "~/components/widgets/ChatWidget.jsx";
 import Hero3 from '~/components/widgets/Hero3.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Features4d from '~/components/widgets/Features4d.astro';
@@ -256,5 +257,5 @@ const heroActions = [
     <div class="h-1 w-16 bg-brand-cedar rounded-full mx-auto mt-8"></div>
   </Fragment>
 </CallToAction>
-
+<ChatWidget client:load />
 </Layout>
