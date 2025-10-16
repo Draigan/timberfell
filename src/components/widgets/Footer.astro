@@ -37,7 +37,9 @@ const uniqueQuickLinks = Array.from(
 );
 
 const serviceAreas = ['Lindsay', 'Peterborough', 'Bobcaygeon', 'Fenelon Falls', 'Kawartha Lakes townships'];
-const blogPosts = posts.length ? posts.slice(0, 4) : APP_BLOG.isEnabled ? await findLatestPosts({ count: 4 }) : [];
+const rawPosts = posts.length ? posts : APP_BLOG.isEnabled ? await findLatestPosts({ count: 4 }) : [];
+const mobilePosts = rawPosts.slice(0, 4);
+const desktopPosts = rawPosts.slice(0, 2);
 ---
 
 <footer class:list={[{ dark: theme === 'dark' }, 'relative border-t border-gray-200 dark:border-slate-800 not-prose']}>
@@ -46,7 +48,7 @@ const blogPosts = posts.length ? posts.slice(0, 4) : APP_BLOG.isEnabled ? await 
     <div class="grid grid-cols-1 gap-10 text-[0.95rem] leading-relaxed text-muted md:grid-cols-4 md:text-base">
       <div class="space-y-4">
         <p class="text-sm font-semibold uppercase tracking-[0.3em] text-accent/80">Quick Links</p>
-        <ul class="flex flex-wrap gap-3 text-sm font-semibold uppercase tracking-wide text-muted/80">
+        <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm font-semibold uppercase tracking-wide text-muted/80">
           {uniqueQuickLinks.map(({ text, href }) => (
             <li>
               <a class="hover:text-gray-700 dark:hover:text-gray-200 transition duration-150 ease-in-out" href={href}>
@@ -76,38 +78,69 @@ const blogPosts = posts.length ? posts.slice(0, 4) : APP_BLOG.isEnabled ? await 
             <li>{area}</li>
           ))}
         </ul>
-        <p class="text-muted/90">Fully insured &amp; WSIB covered for residential and commercial work.</p>
       </div>
       <div class="space-y-4">
         <p class="text-sm font-semibold uppercase tracking-[0.3em] text-accent/80">Latest Posts</p>
-        {blogPosts.length ? (
-          <ul class="space-y-3 text-muted/90">
-            {blogPosts.map(({ title, excerpt, permalink, publishDate, image }) => (
-              <li class="flex gap-3">
-                {image && (
-                  <span class="inline-block h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-gray-200/70 bg-white/70 shadow-sm md:hidden">
-                    <img
-                      src={typeof image === 'string' ? image : image?.src}
-                      alt={typeof image === 'string' ? title ?? '' : image?.alt ?? ''}
-                      class="h-full w-full object-cover"
-                      loading="lazy"
-                    />
-                  </span>
-                )}
-                <div class="space-y-1">
+        {mobilePosts.length ? (
+          <>
+            <ul class="space-y-3 text-muted/90 md:hidden">
+              {mobilePosts.map(({ title, excerpt, permalink, publishDate, image }) => (
+                <li class="flex gap-3">
+                  {image && (
+                    <a
+                      href={permalink ?? '#'}
+                      class="inline-block h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-gray-200/70 bg-white/70 shadow-sm"
+                    >
+                      <img
+                        src={typeof image === 'string' ? image : image?.src}
+                        alt={typeof image === 'string' ? title ?? '' : image?.alt ?? ''}
+                        class="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    </a>
+                  )}
+                  <div class="space-y-1">
+                    {publishDate && (
+                      <span class="text-xs font-semibold uppercase tracking-wide text-accent/80">
+                        {new Date(publishDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </span>
+                    )}
+                    <a href={permalink ?? '#'} class="block font-semibold text-gray-900 dark:text-white hover:text-accent">
+                      {title ?? 'Untitled'}
+                    </a>
+                    {excerpt && <p class="text-sm text-muted/70 line-clamp-2">{excerpt}</p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <ul class="hidden gap-4 text-muted/90 md:grid md:grid-cols-2 lg:grid-cols-2">
+              {desktopPosts.map(({ title, permalink, publishDate, image }) => (
+                <li class="space-y-2 rounded-lg border border-gray-200/70 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/70">
+                  {image && (
+                    <a
+                      href={permalink ?? '#'}
+                      class="block overflow-hidden rounded-md border border-gray-200/70 bg-white shadow-sm"
+                    >
+                      <img
+                        src={typeof image === 'string' ? image : image?.src}
+                        alt={typeof image === 'string' ? title ?? '' : image?.alt ?? ''}
+                        class="h-24 w-full object-cover"
+                        loading="lazy"
+                      />
+                    </a>
+                  )}
                   {publishDate && (
                     <span class="text-xs font-semibold uppercase tracking-wide text-accent/80">
                       {new Date(publishDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                   )}
-                  <a href={permalink ?? '#'} class="block font-semibold text-gray-900 dark:text-white hover:text-accent">
+                  <a href={permalink ?? '#'} class="block text-sm font-semibold text-gray-900 dark:text-white hover:text-accent">
                     {title ?? 'Untitled'}
                   </a>
-                  {excerpt && <p class="text-sm text-muted/70 line-clamp-2">{excerpt}</p>}
-                </div>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          </>
         ) : (
           <p class="text-muted/80 text-sm">Seasonal advice and project highlights are coming soon.</p>
         )}
