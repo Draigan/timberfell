@@ -6,10 +6,14 @@ import heroBackgroundDefault from '~/assets/images/test1.jpg';
 import type { CallToAction, Hero as HeroProps } from '~/types';
 
 interface Props extends Partial<HeroProps> {
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+  actions?: CallToAction[];
   formTitle?: string;
+  formSubtitle?: string;
   formButtonText?: string;
   image?: string | { src: string };
-  actions?: CallToAction[];
   collapsible?: boolean;
   defaultCollapsed?: boolean;
 }
@@ -17,21 +21,20 @@ interface Props extends Partial<HeroProps> {
 const {
   id,
   tagline,
-  title,
-  subtitle,
+  eyebrow = tagline,
+  heading = 'Professional tree care trusted across the Kawarthas',
+  description = 'ISA-certified arborists delivering insured removals, structural pruning, and rapid-response storm work so your property stays safe, healthy, and beautiful year-round.',
   actions = [],
   image = heroBackgroundDefault,
   formTitle = 'Request a quote',
+  formSubtitle,
   formButtonText = 'Send request',
   collapsible = true,
   defaultCollapsed = true,
 } = Astro.props as Props;
 
-const hasTagline = Boolean(tagline);
-const heading = title ?? 'Professional tree care trusted across the Kawarthas';
-const description =
-  subtitle ??
-  'ISA-certified arborists delivering insured removals, structural pruning, and rapid-response storm work so your property stays safe, healthy, and beautiful year-round.';
+const displayEyebrow = eyebrow ?? tagline;
+const hasEyebrow = Boolean(displayEyebrow);
 const actionItems = Array.isArray(actions) ? actions : [];
 const hasActions = actionItems.length > 0;
 
@@ -63,8 +66,8 @@ const mobileDetailsProps = !defaultCollapsed && collapsible ? { open: true } : {
     <div class="py-16 sm:py-24 lg:py-28">
       <div class="grid gap-10 lg:gap-16 items-center text-white md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
         <div class="space-y-6">
-          {hasTagline && (
-            <p class="text-sm font-semibold tracking-[0.35em] uppercase text-accent/85">{tagline}</p>
+          {hasEyebrow && (
+            <p class="text-sm font-semibold tracking-[0.35em] uppercase text-accent/85">{displayEyebrow}</p>
           )}
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">{heading}</h1>
           {description && <p class="text-lg sm:text-xl text-white/90 max-w-2xl">{description}</p>}
@@ -90,6 +93,9 @@ const mobileDetailsProps = !defaultCollapsed && collapsible ? { open: true } : {
                   </span>
                 </summary>
                 <form class="mt-4 grid gap-4">
+                  {formSubtitle && (
+                    <p class="text-sm text-brand-body/80 dark:text-white/70">{formSubtitle}</p>
+                  )}
                   <label class="block">
                     <span class="sr-only">Name</span>
                     <input type="text" name="name" placeholder="Name" class={inputClasses} required />
@@ -118,7 +124,10 @@ const mobileDetailsProps = !defaultCollapsed && collapsible ? { open: true } : {
               </details>
             ) : (
               <form class={formClasses}>
-                <h2 class="text-xl font-semibold text-brand-heading dark:text-white mb-4">{formTitle}</h2>
+                <h2 class="text-xl font-semibold text-brand-heading dark:text-white mb-2">{formTitle}</h2>
+                {formSubtitle && (
+                  <p class="text-sm text-brand-body/80 dark:text-white/70 mb-4">{formSubtitle}</p>
+                )}
                 <div class="grid gap-4">
                   <label class="block">
                     <span class="sr-only">Name</span>
@@ -149,7 +158,10 @@ const mobileDetailsProps = !defaultCollapsed && collapsible ? { open: true } : {
             )}
           </div>
           <form class={`hidden md:block ${formClasses}`}>
-            <h2 class="text-xl font-semibold text-brand-heading dark:text-white mb-4">{formTitle}</h2>
+            <h2 class="text-xl font-semibold text-brand-heading dark:text-white mb-2">{formTitle}</h2>
+            {formSubtitle && (
+              <p class="text-sm text-brand-body/80 dark:text-white/70 mb-4">{formSubtitle}</p>
+            )}
             <div class="grid gap-4">
               <label class="block">
                 <span class="sr-only">Name</span>
