@@ -52,8 +52,6 @@ const inputClasses =
   'w-full rounded-xl border border-brand-forest/20 bg-white/95 px-4 py-3 text-brand-body shadow-sm placeholder:text-brand-body/60 focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/40 dark:border-brand-spruce/30 dark:bg-brand-midnight/60 dark:text-white dark:placeholder:text-white/60';
 const buttonClasses =
   'inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-base font-semibold text-white shadow-lg shadow-accent/30 transition hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-brand-midnight';
-
-const mobileCollapsible = collapsible;
 const mobileDetailsProps = !defaultCollapsed && collapsible ? { open: true } : {};
 ---
 
@@ -97,80 +95,6 @@ const mobileDetailsProps = !defaultCollapsed && collapsible ? { open: true } : {
           )}
         </div>
         <div class="w-full intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
-          <div class="md:hidden">
-            {mobileCollapsible ? (
-              <details class={`group ${formClasses}`} {...mobileDetailsProps}>
-                <summary class="flex cursor-pointer items-center justify-between gap-4 text-brand-heading dark:text-white list-none [&::-webkit-details-marker]:hidden">
-                  <span class="text-lg font-semibold">{formTitle}</span>
-                  <span class="flex h-9 w-9 items-center justify-center rounded-full bg-accent/15 text-accent transition group-open:rotate-180">
-                    <Icon name="tabler:chevron-down" class="h-5 w-5" />
-                  </span>
-                </summary>
-                <form class="mt-4 grid gap-4">
-                  {formSubtitle && (
-                    <p class="text-sm text-brand-body/80 dark:text-white/70">{formSubtitle}</p>
-                  )}
-                  <label class="block">
-                    <span class="sr-only">Name</span>
-                    <input type="text" name="name" placeholder="Name" class={inputClasses} required />
-                  </label>
-                  <label class="block">
-                    <span class="sr-only">Phone</span>
-                    <input type="tel" name="phone" placeholder="Phone" class={inputClasses} required />
-                  </label>
-                  <label class="block">
-                    <span class="sr-only">Address or service area</span>
-                    <input type="text" name="address" placeholder="Address or service area" class={inputClasses} />
-                  </label>
-                  <label class="block">
-                    <span class="sr-only">Describe the tree work you need</span>
-                    <textarea
-                      name="details"
-                      rows="4"
-                      placeholder="Describe the tree work you need"
-                      class={inputClasses}
-                    ></textarea>
-                  </label>
-                  <button type="submit" class={buttonClasses}>
-                    {formButtonText}
-                  </button>
-                </form>
-              </details>
-            ) : (
-              <form class={formClasses}>
-                <h2 class="text-xl font-semibold text-brand-heading dark:text-white mb-2">{formTitle}</h2>
-                {formSubtitle && (
-                  <p class="text-sm text-brand-body/80 dark:text-white/70 mb-4">{formSubtitle}</p>
-                )}
-                <div class="grid gap-4">
-                  <label class="block">
-                    <span class="sr-only">Name</span>
-                    <input type="text" name="name" placeholder="Name" class={inputClasses} required />
-                  </label>
-                  <label class="block">
-                    <span class="sr-only">Phone</span>
-                    <input type="tel" name="phone" placeholder="Phone" class={inputClasses} required />
-                  </label>
-                  <label class="block">
-                    <span class="sr-only">Address or service area</span>
-                    <input type="text" name="address" placeholder="Address or service area" class={inputClasses} />
-                  </label>
-                  <label class="block">
-                    <span class="sr-only">Describe the tree work you need</span>
-                    <textarea
-                      name="details"
-                      rows="4"
-                      placeholder="Describe the tree work you need"
-                      class={inputClasses}
-                    ></textarea>
-                  </label>
-                  <button type="submit" class={buttonClasses}>
-                    {formButtonText}
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
           <form class={`hidden md:block ${formClasses}`}>
             <h2 class="text-xl font-semibold text-brand-heading dark:text-white mb-2">{formTitle}</h2>
             {formSubtitle && (
@@ -208,3 +132,76 @@ const mobileDetailsProps = !defaultCollapsed && collapsible ? { open: true } : {
     </div>
   </div>
 </section>
+
+{collapsible ? (
+  <div class="md:hidden px-4 sm:px-6 pb-12">
+    <details class={`group ${formClasses}`} {...mobileDetailsProps}>
+      <summary class="flex cursor-pointer items-center justify-between gap-4 text-brand-heading dark:text-white list-none [&::-webkit-details-marker]:hidden">
+        <span class="text-lg font-semibold">{formTitle}</span>
+        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-accent/15 text-accent transition group-open:rotate-180 animate-bounce-slow group-open:animate-none">
+          <Icon name="tabler:chevron-down" class="h-5 w-5" />
+        </span>
+      </summary>
+      <form class="mt-4 grid gap-4">
+        {formSubtitle && <p class="text-sm text-brand-body/80 dark:text-white/70">{formSubtitle}</p>}
+        <label class="block">
+          <span class="sr-only">Name</span>
+          <input type="text" name="name" placeholder="Name" class={inputClasses} required />
+        </label>
+        <label class="block">
+          <span class="sr-only">Phone</span>
+          <input type="tel" name="phone" placeholder="Phone" class={inputClasses} required />
+        </label>
+        <label class="block">
+          <span class="sr-only">Address or service area</span>
+          <input type="text" name="address" placeholder="Address or service area" class={inputClasses} />
+        </label>
+        <label class="block">
+          <span class="sr-only">Describe the tree work you need</span>
+          <textarea
+            name="details"
+            rows="4"
+            placeholder="Describe the tree work you need"
+            class={inputClasses}
+          ></textarea>
+        </label>
+        <button type="submit" class={buttonClasses}>
+          {formButtonText}
+        </button>
+      </form>
+    </details>
+  </div>
+) : (
+  <div class="md:hidden px-4 sm:px-6 pb-12">
+    <form class={formClasses}>
+      <h2 class="text-xl font-semibold text-brand-heading dark:text-white mb-2">{formTitle}</h2>
+      {formSubtitle && <p class="text-sm text-brand-body/80 dark:text-white/70 mb-4">{formSubtitle}</p>}
+      <div class="grid gap-4">
+        <label class="block">
+          <span class="sr-only">Name</span>
+          <input type="text" name="name" placeholder="Name" class={inputClasses} required />
+        </label>
+        <label class="block">
+          <span class="sr-only">Phone</span>
+          <input type="tel" name="phone" placeholder="Phone" class={inputClasses} required />
+        </label>
+        <label class="block">
+          <span class="sr-only">Address or service area</span>
+          <input type="text" name="address" placeholder="Address or service area" class={inputClasses} />
+        </label>
+        <label class="block">
+          <span class="sr-only">Describe the tree work you need</span>
+          <textarea
+            name="details"
+            rows="4"
+            placeholder="Describe the tree work you need"
+            class={inputClasses}
+          ></textarea>
+        </label>
+        <button type="submit" class={buttonClasses}>
+          {formButtonText}
+        </button>
+      </div>
+    </form>
+  </div>
+)}

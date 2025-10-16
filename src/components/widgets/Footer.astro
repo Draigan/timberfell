@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import { SITE } from 'astrowind:config';
 import { getHomePermalink } from '~/utils/permalinks';
+import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 
 interface Link {
   text?: string;
@@ -74,6 +75,15 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
         ))
       }
     </div>
+
+    <!-- Add Blog Section here -->
+    <div class="border-t border-gray-200 dark:border-slate-700 mt-8 pt-8">
+      <BlogLatestPosts
+        title="From the Blog"
+        information={`Tree care tips, seasonal advice, and arborist insights from the Timberfell team — helping Kawartha Lakes homeowners keep their properties safe and healthy.`}
+      />
+    </div>
+
     <div class="md:flex md:items-center md:justify-between py-6 md:py-8">
       {
         socialLinks?.length ? (
@@ -102,3 +112,4 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
     </div>
   </div>
 </footer>
+

@@ -3,6 +3,7 @@ import Layout from '~/layouts/PageLayout.astro';
 import Hero3 from '~/components/widgets/Hero3.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Features4d from '~/components/widgets/Features4d.astro';
+import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import Content from '~/components/widgets/Content.astro';
 import Testimonials from '~/components/widgets/Testimonials.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
@@ -226,6 +227,15 @@ const heroActions = [
     <div class="h-1 w-16 bg-brand-cedar rounded-full mx-auto mt-6"></div>
   </Fragment>
 </Testimonials>
+
+  <BlogLatestPosts
+    title="Find out more content in our Blog"
+    information={`The blog is used to display AstroWind documentation.
+                        Each new article will be an important step that you will need to know to be an expert in creating a website using Astro + Tailwind CSS.
+                        Astro is a very interesting technology. Thanks.
+                `}
+  />
+
 
 <!-- CTA -->
 <CallToAction
