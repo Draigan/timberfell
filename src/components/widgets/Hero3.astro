@@ -1,0 +1,184 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '~/components/ui/Button.astro';
+import heroBackgroundDefault from '~/assets/images/test1.jpg';
+
+import type { CallToAction, Hero as HeroProps } from '~/types';
+
+interface Props extends Partial<HeroProps> {
+  formTitle?: string;
+  formButtonText?: string;
+  image?: string | { src: string };
+  actions?: CallToAction[];
+  collapsible?: boolean;
+  defaultCollapsed?: boolean;
+}
+
+const {
+  id,
+  tagline,
+  title,
+  subtitle,
+  actions = [],
+  image = heroBackgroundDefault,
+  formTitle = 'Request a quote',
+  formButtonText = 'Send request',
+  collapsible = true,
+  defaultCollapsed = true,
+} = Astro.props as Props;
+
+const hasTagline = Boolean(tagline);
+const heading = title ?? 'Professional tree care trusted across the Kawarthas';
+const description =
+  subtitle ??
+  'ISA-certified arborists delivering insured removals, structural pruning, and rapid-response storm work so your property stays safe, healthy, and beautiful year-round.';
+const actionItems = Array.isArray(actions) ? actions : [];
+const hasActions = actionItems.length > 0;
+
+const backgroundUrl =
+  typeof image === 'string'
+    ? image
+    : typeof image === 'object' && image !== null && 'src' in image
+      ? (image as { src: string }).src
+      : heroBackgroundDefault.src;
+
+const formClasses =
+  'bg-white/90 backdrop-blur-md rounded-2xl border border-brand-forest/10 p-6 shadow-xl text-brand-body dark:bg-brand-midnight/80 dark:text-white dark:border-brand-spruce/30';
+const inputClasses =
+  'w-full rounded-xl border border-brand-forest/20 bg-white/95 px-4 py-3 text-brand-body shadow-sm placeholder:text-brand-body/60 focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/40 dark:border-brand-spruce/30 dark:bg-brand-midnight/60 dark:text-white dark:placeholder:text-white/60';
+const buttonClasses =
+  'inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-base font-semibold text-white shadow-lg shadow-accent/30 transition hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-brand-midnight';
+
+const mobileCollapsible = collapsible;
+const mobileDetailsProps = !defaultCollapsed && collapsible ? { open: true } : {};
+---
+
+<section class="relative overflow-hidden not-prose" {...(id ? { id } : {})}>
+  <div class="absolute inset-0">
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style={`background-image: url(${backgroundUrl});`}></div>
+    <div class="absolute inset-0 bg-brand-forest/30 mix-blend-multiply dark:bg-brand-midnight/40"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-brand-forest/45 via-brand-forest/35 to-transparent dark:from-brand-midnight/65 dark:via-brand-spruce/45 dark:to-black/40"></div>
+  </div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="py-16 sm:py-24 lg:py-28">
+      <div class="grid gap-10 lg:gap-16 items-center text-white md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+        <div class="space-y-6">
+          {hasTagline && (
+            <p class="text-sm font-semibold tracking-[0.35em] uppercase text-accent/85">{tagline}</p>
+          )}
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">{heading}</h1>
+          {description && <p class="text-lg sm:text-xl text-white/90 max-w-2xl">{description}</p>}
+          {hasActions && (
+            <div class="flex flex-col sm:flex-row gap-4">
+              {actionItems.map((action) => (
+                <Button
+                  {...action}
+                  class="w-full sm:w-auto"
+                />
+              ))}
+            </div>
+          )}
+        </div>
+        <div class="w-full">
+          <div class="md:hidden">
+            {mobileCollapsible ? (
+              <details class={`group ${formClasses}`} {...mobileDetailsProps}>
+                <summary class="flex cursor-pointer items-center justify-between gap-4 text-brand-heading dark:text-white list-none [&::-webkit-details-marker]:hidden">
+                  <span class="text-lg font-semibold">{formTitle}</span>
+                  <span class="flex h-9 w-9 items-center justify-center rounded-full bg-accent/15 text-accent transition group-open:rotate-180">
+                    <Icon name="tabler:chevron-down" class="h-5 w-5" />
+                  </span>
+                </summary>
+                <form class="mt-4 grid gap-4">
+                  <label class="block">
+                    <span class="sr-only">Name</span>
+                    <input type="text" name="name" placeholder="Name" class={inputClasses} required />
+                  </label>
+                  <label class="block">
+                    <span class="sr-only">Phone</span>
+                    <input type="tel" name="phone" placeholder="Phone" class={inputClasses} required />
+                  </label>
+                  <label class="block">
+                    <span class="sr-only">Address or service area</span>
+                    <input type="text" name="address" placeholder="Address or service area" class={inputClasses} />
+                  </label>
+                  <label class="block">
+                    <span class="sr-only">Describe the tree work you need</span>
+                    <textarea
+                      name="details"
+                      rows="4"
+                      placeholder="Describe the tree work you need"
+                      class={inputClasses}
+                    ></textarea>
+                  </label>
+                  <button type="submit" class={buttonClasses}>
+                    {formButtonText}
+                  </button>
+                </form>
+              </details>
+            ) : (
+              <form class={formClasses}>
+                <h2 class="text-xl font-semibold text-brand-heading dark:text-white mb-4">{formTitle}</h2>
+                <div class="grid gap-4">
+                  <label class="block">
+                    <span class="sr-only">Name</span>
+                    <input type="text" name="name" placeholder="Name" class={inputClasses} required />
+                  </label>
+                  <label class="block">
+                    <span class="sr-only">Phone</span>
+                    <input type="tel" name="phone" placeholder="Phone" class={inputClasses} required />
+                  </label>
+                  <label class="block">
+                    <span class="sr-only">Address or service area</span>
+                    <input type="text" name="address" placeholder="Address or service area" class={inputClasses} />
+                  </label>
+                  <label class="block">
+                    <span class="sr-only">Describe the tree work you need</span>
+                    <textarea
+                      name="details"
+                      rows="4"
+                      placeholder="Describe the tree work you need"
+                      class={inputClasses}
+                    ></textarea>
+                  </label>
+                  <button type="submit" class={buttonClasses}>
+                    {formButtonText}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+          <form class={`hidden md:block ${formClasses}`}>
+            <h2 class="text-xl font-semibold text-brand-heading dark:text-white mb-4">{formTitle}</h2>
+            <div class="grid gap-4">
+              <label class="block">
+                <span class="sr-only">Name</span>
+                <input type="text" name="name" placeholder="Name" class={inputClasses} required />
+              </label>
+              <label class="block">
+                <span class="sr-only">Phone</span>
+                <input type="tel" name="phone" placeholder="Phone" class={inputClasses} required />
+              </label>
+              <label class="block">
+                <span class="sr-only">Address or service area</span>
+                <input type="text" name="address" placeholder="Address or service area" class={inputClasses} />
+              </label>
+              <label class="block">
+                <span class="sr-only">Describe the tree work you need</span>
+                <textarea
+                  name="details"
+                  rows="4"
+                  placeholder="Describe the tree work you need"
+                  class={inputClasses}
+                ></textarea>
+              </label>
+              <button type="submit" class={buttonClasses}>
+                {formButtonText}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

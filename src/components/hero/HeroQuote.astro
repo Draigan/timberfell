@@ -1,0 +1,127 @@
+---
+import Button from '~/components/ui/Button.astro';
+import heroBackgroundDefault from '~/assets/images/test1.jpg';
+
+export interface Action {
+  variant?: string;
+  text: string;
+  href?: string;
+  [key: string]: unknown;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  actions?: Action[];
+  backgroundImage?: { src: string } | string;
+  formId?: string;
+  formTitle?: string;
+  formButtonText?: string;
+}
+
+const {
+  eyebrow = 'Timberfell Tree Care',
+  title = 'Professional tree care trusted across the Kawarthas',
+  description = `ISA-certified arborists delivering insured removals, structural pruning, and rapid-response storm work so your property stays safe, healthy, and beautiful year-round.`,
+  actions = [],
+  backgroundImage = heroBackgroundDefault,
+  formId = 'quote',
+  formTitle = 'Request a quote',
+  formButtonText = 'Send request',
+} = Astro.props as Props;
+
+const backgroundUrl = typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.src;
+---
+
+<section class="relative overflow-hidden not-prose">
+  <div class="absolute inset-0">
+    <div
+      class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style={`background-image: url(${backgroundUrl});`}
+    ></div>
+    <div class="absolute inset-0 bg-brand-forest/30 mix-blend-multiply dark:bg-brand-midnight/40"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-brand-forest/45 via-brand-forest/35 to-transparent dark:from-brand-midnight/65 dark:via-brand-spruce/45 dark:to-black/40"></div>
+  </div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="py-16 sm:py-24 lg:py-28">
+      <div class="grid gap-10 lg:gap-16 items-center text-white md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+        <div class="space-y-6">
+          {eyebrow && (
+            <p class="text-sm font-semibold tracking-[0.35em] uppercase text-accent/85">{eyebrow}</p>
+          )}
+          {title && (
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
+              {title}
+            </h1>
+          )}
+          {description && <p class="text-lg sm:text-xl text-white/90 max-w-2xl">{description}</p>}
+          {actions?.length > 0 && (
+            <div class="flex flex-col sm:flex-row gap-4">
+              {
+                actions.map((action) => (
+                  <Button
+                    {...action}
+                    class="w-full sm:w-auto"
+                  />
+                ))
+              }
+            </div>
+          )}
+        </div>
+        <form
+          id={formId}
+          class="bg-white/90 backdrop-blur-md rounded-2xl border border-brand-forest/10 p-6 shadow-xl text-brand-body dark:bg-brand-midnight/80 dark:text-white dark:border-brand-spruce/30"
+        >
+          {formTitle && <h2 class="text-xl font-semibold text-brand-heading dark:text-white mb-4">{formTitle}</h2>}
+          <div class="grid gap-4">
+            <label class="block">
+              <span class="sr-only">Name</span>
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                class="w-full rounded-xl border border-brand-forest/20 bg-white/95 px-4 py-3 text-brand-body shadow-sm placeholder:text-brand-body/60 focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/40 dark:border-brand-spruce/30 dark:bg-brand-midnight/60 dark:text-white dark:placeholder:text-white/60"
+                required
+              />
+            </label>
+            <label class="block">
+              <span class="sr-only">Phone</span>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone"
+                class="w-full rounded-xl border border-brand-forest/20 bg-white/95 px-4 py-3 text-brand-body shadow-sm placeholder:text-brand-body/60 focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/40 dark:border-brand-spruce/30 dark:bg-brand-midnight/60 dark:text-white dark:placeholder:text-white/60"
+                required
+              />
+            </label>
+            <label class="block">
+              <span class="sr-only">Address or service area</span>
+              <input
+                type="text"
+                name="address"
+                placeholder="Address or service area"
+                class="w-full rounded-xl border border-brand-forest/20 bg-white/95 px-4 py-3 text-brand-body shadow-sm placeholder:text-brand-body/60 focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/40 dark:border-brand-spruce/30 dark:bg-brand-midnight/60 dark:text-white dark:placeholder:text-white/60"
+              />
+            </label>
+            <label class="block">
+              <span class="sr-only">Describe the tree work you need</span>
+              <textarea
+                name="details"
+                rows="4"
+                placeholder="Describe the tree work you need"
+                class="w-full rounded-xl border border-brand-forest/20 bg-white/95 px-4 py-3 text-brand-body shadow-sm placeholder:text-brand-body/60 focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/40 dark:border-brand-spruce/30 dark:bg-brand-midnight/60 dark:text-white dark:placeholder:text-white/60"
+              ></textarea>
+            </label>
+            <button
+              type="submit"
+              class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-base font-semibold text-white shadow-lg shadow-accent/30 transition hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-brand-midnight"
+            >
+              {formButtonText}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
