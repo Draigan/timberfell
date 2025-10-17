@@ -83,9 +83,9 @@ const desktopPosts = rawPosts.slice(0, 2);
         <p class="text-sm font-semibold uppercase tracking-[0.3em] text-accent/80">Latest Posts</p>
         {mobilePosts.length ? (
           <>
-            <ul class="space-y-3 text-muted/90 md:hidden">
+            <div class="space-y-3 text-muted/90 md:hidden">
               {mobilePosts.map(({ title, excerpt, permalink, publishDate, image }) => (
-                <li class="flex gap-3">
+                <article class="flex gap-3">
                   {image && (
                     <a
                       href={permalink ?? '#'}
@@ -110,12 +110,12 @@ const desktopPosts = rawPosts.slice(0, 2);
                     </a>
                     {excerpt && <p class="text-sm text-muted/70 line-clamp-2">{excerpt}</p>}
                   </div>
-                </li>
+                </article>
               ))}
-            </ul>
-            <ul class="hidden gap-4 text-muted/90 md:grid md:grid-cols-2 lg:grid-cols-2">
+            </div>
+            <div class="hidden gap-4 text-muted/90 md:grid md:grid-cols-2 lg:grid-cols-2">
               {desktopPosts.map(({ title, permalink, publishDate, image }) => (
-                <li class="space-y-2 rounded-lg border border-gray-200/70 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/70">
+                <article class="space-y-2 rounded-lg border border-gray-200/70 bg-white/80 p-4 md:pl-0 md:pr-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/70">
                   {image && (
                     <a
                       href={permalink ?? '#'}
@@ -137,9 +137,9 @@ const desktopPosts = rawPosts.slice(0, 2);
                   <a href={permalink ?? '#'} class="block text-sm font-semibold text-gray-900 dark:text-white hover:text-accent">
                     {title ?? 'Untitled'}
                   </a>
-                </li>
+                </article>
               ))}
-            </ul>
+            </div>
           </>
         ) : (
           <p class="text-muted/80 text-sm">Seasonal advice and project highlights are coming soon.</p>
