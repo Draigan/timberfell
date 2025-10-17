@@ -11,6 +11,7 @@ interface Link {
 
 export interface Props {
   secondaryLinks?: Array<Link>;
+  exampleLinks?: Array<Link>;
   posts?: Array<Post>;
   footNote?: string;
   theme?: string;
@@ -18,6 +19,7 @@ export interface Props {
 
 const {
   secondaryLinks = [],
+  exampleLinks = [],
   posts = [],
   footNote = 'Made by Draigan All rights reserved',
   theme = 'light',
@@ -31,10 +33,17 @@ const baseLinks = [
   { text: 'Blog', href: '/blog' },
 ];
 
-const quickLinks = [...baseLinks, ...(secondaryLinks ?? [])];
-const uniqueQuickLinks = Array.from(
-  new Map(quickLinks.map((link) => [link.href ?? link.text ?? '#', link])).values()
-);
+const quickLinkSources = [...baseLinks, ...(secondaryLinks ?? [])];
+const uniqueQuickLinks = [];
+const seenQuickLinkKeys = new Set<string>();
+
+for (const link of quickLinkSources) {
+  const key = link.href ?? link.text ?? '#';
+  if (seenQuickLinkKeys.has(key)) continue;
+
+  seenQuickLinkKeys.add(key);
+  uniqueQuickLinks.push(link);
+}
 
 const serviceAreas = ['Lindsay', 'Peterborough', 'Bobcaygeon', 'Fenelon Falls', 'Kawartha Lakes townships'];
 const rawPosts = posts.length ? posts : APP_BLOG.isEnabled ? await findLatestPosts({ count: 4 }) : [];
@@ -56,6 +65,31 @@ const desktopPosts = rawPosts.slice(0, 2);
               </a>
             </li>
           ))}
+          {exampleLinks.length ? (
+            <li class="col-span-2">
+              <details class="group rounded-md border border-gray-200/70 bg-white/70 px-3 py-2 shadow-sm transition duration-150 ease-in-out dark:border-slate-700 dark:bg-slate-900/60">
+                <summary class="flex cursor-pointer items-center justify-between gap-2 text-sm font-semibold uppercase tracking-wide text-muted/80 hover:text-gray-700 dark:hover:text-gray-200">
+                  <span>Examples</span>
+                  <svg class="h-4 w-4 transform transition-transform duration-150 group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 10.587l3.71-3.356a.75.75 0 011.04 1.083l-4.235 3.83a.75.75 0 01-1.04 0L5.21 8.323a.75.75 0 01.02-1.113z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </summary>
+                <ul class="mt-2 space-y-1 text-left text-sm font-medium normal-case tracking-normal text-muted/80">
+                  {exampleLinks.map(({ text, href }) => (
+                    <li>
+                      <a class="block rounded px-2 py-1 hover:text-gray-700 dark:hover:text-gray-200" href={href ?? '#'}>
+                        {text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </li>
+          ) : null}
         </ul>
       </div>
       <div class="space-y-4">
