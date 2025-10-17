@@ -45,6 +45,8 @@ for (const link of quickLinkSources) {
   uniqueQuickLinks.push(link);
 }
 
+const disabledLinkClasses = 'pointer-events-none';
+
 const serviceAreas = ['Lindsay', 'Peterborough', 'Bobcaygeon', 'Fenelon Falls', 'Kawartha Lakes townships'];
 const rawPosts = posts.length ? posts : APP_BLOG.isEnabled ? await findLatestPosts({ count: 4 }) : [];
 const mobilePosts = rawPosts.slice(0, 4);
@@ -60,7 +62,12 @@ const desktopPosts = rawPosts.slice(0, 2);
         <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm font-semibold uppercase tracking-wide text-muted/80">
           {uniqueQuickLinks.map(({ text, href }) => (
             <li>
-              <a class="hover:text-gray-700 dark:hover:text-gray-200 transition duration-150 ease-in-out" href={href}>
+              <a
+                class={`hover:text-gray-700 dark:hover:text-gray-200 transition duration-150 ease-in-out ${disabledLinkClasses}`}
+                href={href}
+                aria-disabled="true"
+                tabindex="-1"
+              >
                 {text}
               </a>
             </li>
@@ -81,7 +88,7 @@ const desktopPosts = rawPosts.slice(0, 2);
                 <ul class="mt-2 space-y-1 text-left text-sm font-medium normal-case tracking-normal text-muted/80">
                   {exampleLinks.map(({ text, href }) => (
                     <li>
-                      <a class="block rounded px-2 py-1 hover:text-gray-700 dark:hover:text-gray-200" href={href ?? '#'}>
+                      <a class={`block rounded px-2 py-1 hover:text-gray-700 dark:hover:text-gray-200 ${disabledLinkClasses}`} href={href ?? '#'} aria-disabled="true" tabindex="-1">
                         {text}
                       </a>
                     </li>
@@ -96,10 +103,16 @@ const desktopPosts = rawPosts.slice(0, 2);
         <p class="text-sm font-semibold uppercase tracking-[0.3em] text-accent/80">Contact</p>
         <div class="space-y-2 text-muted/90">
           <p>
-            Phone: <a class="font-semibold text-gray-900 dark:text-white" href="tel:+17053345678">(705) 334-5678</a>
+            Phone:
+            <a class={`ml-1 inline-block font-semibold text-gray-900 dark:text-white ${disabledLinkClasses}`} href="tel:+17053345678" aria-disabled="true" tabindex="-1">
+              (705) 334-5678
+            </a>
           </p>
           <p>
-            Email: <a class="font-semibold text-gray-900 dark:text-white hover:text-accent" href="mailto:hello@timberfell.ca">hello@timberfell.ca</a>
+            Email:
+            <a class={`ml-1 inline-block font-semibold text-gray-900 dark:text-white hover:text-accent ${disabledLinkClasses}`} href="mailto:hello@timberfell.ca" aria-disabled="true" tabindex="-1">
+              hello@timberfell.ca
+            </a>
           </p>
           <p>Mon–Sat · 8:00–18:00</p>
           <p>Emergency crews on call 24/7</p>
@@ -123,7 +136,9 @@ const desktopPosts = rawPosts.slice(0, 2);
                   {image && (
                     <a
                       href={permalink ?? '#'}
-                      class="inline-block h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-gray-200/70 bg-white/70 shadow-sm"
+                      class={`inline-block h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-gray-200/70 bg-white/70 shadow-sm ${disabledLinkClasses}`}
+                      aria-disabled="true"
+                      tabindex="-1"
                     >
                       <img
                         src={typeof image === 'string' ? image : image?.src}
@@ -139,7 +154,12 @@ const desktopPosts = rawPosts.slice(0, 2);
                         {new Date(publishDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                       </span>
                     )}
-                    <a href={permalink ?? '#'} class="block font-semibold text-gray-900 dark:text-white hover:text-accent">
+                    <a
+                      href={permalink ?? '#'}
+                      class={`block font-semibold text-gray-900 dark:text-white hover:text-accent ${disabledLinkClasses}`}
+                      aria-disabled="true"
+                      tabindex="-1"
+                    >
                       {title ?? 'Untitled'}
                     </a>
                     {excerpt && <p class="text-sm text-muted/70 line-clamp-2">{excerpt}</p>}
@@ -153,7 +173,9 @@ const desktopPosts = rawPosts.slice(0, 2);
                   {image && (
                     <a
                       href={permalink ?? '#'}
-                      class="block overflow-hidden rounded-md border border-gray-200/70 bg-white shadow-sm"
+                      class={`block overflow-hidden rounded-md border border-gray-200/70 bg-white shadow-sm ${disabledLinkClasses}`}
+                      aria-disabled="true"
+                      tabindex="-1"
                     >
                       <img
                         src={typeof image === 'string' ? image : image?.src}
@@ -168,7 +190,12 @@ const desktopPosts = rawPosts.slice(0, 2);
                       {new Date(publishDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                   )}
-                  <a href={permalink ?? '#'} class="block text-sm font-semibold text-gray-900 dark:text-white hover:text-accent">
+                  <a
+                    href={permalink ?? '#'}
+                    class={`block text-sm font-semibold text-gray-900 dark:text-white hover:text-accent ${disabledLinkClasses}`}
+                    aria-disabled="true"
+                    tabindex="-1"
+                  >
                     {title ?? 'Untitled'}
                   </a>
                 </article>
