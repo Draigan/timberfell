@@ -1,0 +1,198 @@
+---
+const BRAND_PRIMARY = '#7b4a2b';
+---
+
+<div data-chat-widget class="z-[9999]">
+  <button
+    type="button"
+    aria-label="Open chat"
+    aria-expanded="false"
+    data-chat-toggle
+    class="fixed bottom-5 right-5 flex h-14 w-14 items-center justify-center rounded-full text-white transition duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/70 focus:ring-offset-2 focus:ring-offset-stone-800"
+    style={`background-color: ${BRAND_PRIMARY};`}
+  >
+    <span class="text-xl">💬</span>
+  </button>
+
+  <div
+    data-chat-panel
+    hidden
+    class="fixed bottom-28 right-5 w-[20rem] overflow-hidden rounded-2xl border border-black/10 bg-white shadow-none dark:border-white/10 dark:bg-slate-900/98"
+    style="filter: drop-shadow(0 28px 34px rgba(18,18,22,1));"
+  >
+    <div class="flex items-center justify-between bg-gradient-to-r from-[#6b3e25] via-[#7b4a2b] to-[#875232] px-4 py-3 text-white">
+      <div>
+        <p class="text-sm font-semibold">Timberfell Assistant</p>
+        <p class="text-xs text-white/90">Typically replies in a few seconds</p>
+      </div>
+      <span class="flex h-2.5 w-2.5 items-center justify-center rounded-full bg-emerald-400" aria-hidden="true" />
+    </div>
+
+    <div class="flex max-h-[22rem] flex-col bg-white dark:bg-slate-900/98">
+      <div data-chat-scroll class="flex-1 space-y-3 overflow-y-auto px-4 py-4 text-sm">
+        <div
+          data-chat-placeholder
+          class="rounded-lg bg-stone-100 px-4 py-3 text-stone-600 dark:bg-slate-800/80 dark:text-slate-200/80"
+        >
+          Hi there! Ask about emergency service times, pricing, or what we recommend for the trees on your lot.
+        </div>
+        <div data-chat-messages class="space-y-3"></div>
+        <div data-chat-loader class="hidden">
+          <div class="flex justify-start">
+            <div class="flex items-center gap-2 rounded-2xl bg-stone-100 px-3 py-2 text-stone-500 dark:bg-slate-800/60 dark:text-slate-200/80">
+              <span class="inline-flex h-2 w-2 animate-bounce rounded-full bg-stone-400" />
+              <span class="inline-flex h-2 w-2 animate-bounce delay-150 rounded-full bg-stone-400" />
+              <span class="inline-flex h-2 w-2 animate-bounce delay-300 rounded-full bg-stone-400" />
+            </div>
+          </div>
+        </div>
+        <div data-chat-bottom></div>
+      </div>
+
+      <form data-chat-form class="border-t border-stone-200 bg-white/95 px-3 py-3 dark:border-slate-700 dark:bg-slate-900/95">
+        <div class="flex items-center gap-2 rounded-xl bg-stone-100 px-2 py-2 dark:bg-slate-800/70">
+          <input
+            data-chat-input
+            type="text"
+            placeholder="Ask us about service hours..."
+            class="flex-1 bg-transparent px-1 text-sm text-stone-800 placeholder:text-stone-400 focus:outline-none dark:text-slate-100 dark:placeholder:text-slate-400"
+            autocomplete="off"
+          />
+          <button
+            data-chat-submit
+            type="submit"
+            class="inline-flex items-center gap-1 rounded-lg bg-[#7b4a2b] px-3 py-1.5 text-sm font-semibold text-white transition duration-150 hover:bg-[#6b3e25] focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-2 focus:ring-offset-[#7b4a2b] disabled:cursor-not-allowed disabled:bg-stone-400 disabled:text-white/70 dark:focus:ring-offset-slate-900"
+          >
+            Send
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const widgets = document.querySelectorAll('[data-chat-widget]');
+    if (!widgets.length) return;
+
+    widgets.forEach((widget) => {
+      const toggleBtn = widget.querySelector('[data-chat-toggle]');
+      const panel = widget.querySelector('[data-chat-panel]');
+      const placeholder = widget.querySelector('[data-chat-placeholder]');
+      const messagesContainer = widget.querySelector('[data-chat-messages]');
+      const loaderContainer = widget.querySelector('[data-chat-loader]');
+      const form = widget.querySelector('[data-chat-form]');
+      const input = widget.querySelector('[data-chat-input]');
+      const submitButton = widget.querySelector('[data-chat-submit]');
+      const bottomAnchor = widget.querySelector('[data-chat-bottom]');
+
+      if (!toggleBtn || !panel || !form || !input || !messagesContainer || !bottomAnchor) {
+        return;
+      }
+
+      let isOpen = false;
+      let isLoading = false;
+
+      const focusInput = () => {
+        requestAnimationFrame(() => {
+          input.focus();
+        });
+      };
+
+      const scrollToBottom = () => {
+        requestAnimationFrame(() => {
+          bottomAnchor.scrollIntoView({ behavior: 'smooth' });
+        });
+      };
+
+      const setOpen = (open) => {
+        isOpen = open;
+        toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggleBtn.setAttribute('aria-label', open ? 'Close chat' : 'Open chat');
+        panel.toggleAttribute('hidden', !open);
+        if (open) {
+          focusInput();
+          scrollToBottom();
+        }
+      };
+
+      const ensurePlaceholderVisibility = () => {
+        if (!placeholder) return;
+        const hasMessages = messagesContainer.children.length > 0;
+        placeholder.classList.toggle('hidden', hasMessages || isLoading);
+      };
+
+      const setLoading = (state) => {
+        isLoading = state;
+        ensurePlaceholderVisibility();
+        loaderContainer?.classList.toggle('hidden', !state);
+        submitButton?.toggleAttribute('disabled', state);
+      };
+
+      const bubbleClass = (from) =>
+        from === 'user'
+          ? 'bg-[#7b4a2b] text-white border border-[#5a311a]'
+          : 'bg-white text-stone-800 border border-stone-200 dark:bg-slate-800/60 dark:text-slate-100 dark:border-slate-700';
+
+      const appendMessage = (from, text) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = `flex ${from === 'user' ? 'justify-end' : 'justify-start'}`;
+
+        const bubble = document.createElement('div');
+        bubble.className = `max-w-[80%] rounded-2xl px-3 py-2 ${bubbleClass(from)}`;
+        bubble.textContent = text;
+
+        wrapper.appendChild(bubble);
+        messagesContainer.appendChild(wrapper);
+
+        ensurePlaceholderVisibility();
+        scrollToBottom();
+      };
+
+      toggleBtn.addEventListener('click', () => {
+        setOpen(!isOpen);
+      });
+
+      const sendMessage = async (value) => {
+        appendMessage('user', value);
+        setLoading(true);
+
+        try {
+          const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: value }),
+          });
+
+          const data = await response.json().catch(() => ({}));
+          const replyText = `${data?.reply ?? ''}`.trim() || 'I’m still thinking about that.';
+          appendMessage('bot', replyText);
+        } catch (error) {
+          appendMessage('bot', 'Sorry, I’m having trouble responding right now.');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        if (isLoading) return;
+
+        const value = input.value.trim();
+        if (!value) return;
+
+        input.value = '';
+        sendMessage(value);
+      });
+
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          form.requestSubmit();
+        }
+      });
+    });
+  })();
+</script>

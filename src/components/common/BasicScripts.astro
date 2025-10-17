@@ -41,8 +41,6 @@ import { UI } from 'astrowind:config';
   }
 
   const onLoad = function () {
-    let lastKnownScrollPosition = window.scrollY;
-    let ticking = true;
 
     attachEvent('#header nav', 'click', function () {
       document.querySelector('[data-aw-toggle-menu]')?.classList.remove('expanded');
@@ -119,28 +117,42 @@ import { UI } from 'astrowind:config';
       document.querySelector('#header > div > div:last-child')?.classList.add('hidden');
     });
 
-    function applyHeaderStylesOnScroll() {
+    function setupStickyHeaderObserver() {
       const header = document.querySelector('#header[data-aw-sticky-header]');
       if (!header) return;
-      if (lastKnownScrollPosition > 60 && !header.classList.contains('scroll')) {
+
+      if (header.dataset.awStickyObserver === 'true') {
+        header.classList.toggle('scroll', window.scrollY > 0);
+        return;
+      }
+
+      header.dataset.awStickyObserver = 'true';
+
+      let sentinel = header.previousElementSibling;
+      if (!sentinel || !sentinel.matches('[data-aw-header-sentinel]')) {
+        sentinel = document.createElement('div');
+        sentinel.setAttribute('data-aw-header-sentinel', 'true');
+        sentinel.style.cssText = 'height:1px;margin-top:-1px;pointer-events:none;visibility:hidden;';
+        header.parentElement?.insertBefore(sentinel, header);
+      }
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          header.classList.toggle('scroll', !entry.isIntersecting);
+        },
+        { threshold: [0] },
+      );
+
+      observer.observe(sentinel);
+      header.__awStickyObserver = observer;
+      header.__awStickySentinel = sentinel;
+
+      if (window.scrollY > 0) {
         header.classList.add('scroll');
-      } else if (lastKnownScrollPosition <= 60 && header.classList.contains('scroll')) {
-        header.classList.remove('scroll');
       }
-      ticking = false;
     }
-    applyHeaderStylesOnScroll();
 
-    attachEvent([document], 'scroll', function () {
-      lastKnownScrollPosition = window.scrollY;
-
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          applyHeaderStylesOnScroll();
-        });
-        ticking = true;
-      }
-    });
+    setupStickyHeaderObserver();
   };
   const onPageShow = function () {
     document.documentElement.classList.add('motion-safe:scroll-smooth');
